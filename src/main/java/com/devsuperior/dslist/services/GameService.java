@@ -8,6 +8,8 @@ import com.devsuperior.dslist.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import projection.GameMinProjection;
+
 import java.util.List;
 
 @Service
@@ -27,4 +29,10 @@ public class GameService {
         return result.stream().map(x -> new GameMinDto(x)).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<GameMinDto> findByList(Long listId){
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDto(x)).toList();
+
+    }
 }
